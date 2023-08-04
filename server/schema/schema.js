@@ -92,8 +92,17 @@ const mutation = new GraphQLObjectType({
              args:{
                   id:{type:new GraphQLNonNull(GraphQLID)},
              },
-             resolve(parent,args){
-                 return Client.findByIdAndRemove(args.id)
+             async resolve(parent,args){
+                try {
+                    const projects = await Project.find({ clientId: args.id }).exec();
+                    console.log('show me the projects', projects);
+                    await Promise.all(projects.map(project => project.remove()));
+                    return Client.findByIdAndRemove(args.id);
+                  } catch (err) {
+                    // Handle any errors that might occur during the deletion process
+                    console.error(err);
+                    throw new Error("Failed to delete client and associated projects.");
+                  }
              }
           },
 
