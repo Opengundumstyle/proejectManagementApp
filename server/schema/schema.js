@@ -96,7 +96,8 @@ const mutation = new GraphQLObjectType({
                 try {
                     const projects = await Project.find({ clientId: args.id }).exec();
                     console.log('show me the projects', projects);
-                    await Promise.all(projects.map(project => project.remove()));
+                      // Use deleteMany to remove all associated projects
+                    await Project.deleteMany({ clientId: args.id });
                     return Client.findByIdAndRemove(args.id);
                   } catch (err) {
                     // Handle any errors that might occur during the deletion process
