@@ -1,0 +1,13 @@
+fullstack_project/
+  ├── client/
+  │   ├── package.json
+  │   ├── src/
+  │   ├── Dockerfile
+  ├── server/
+  │   ├── package.json
+  │   ├── src/
+  │   ├── Dockerfile
+  |── nginx/
+  │   ├── default.conf
+  │   ├── Dockerfile.dev
+  ├── docker-compose.yml
